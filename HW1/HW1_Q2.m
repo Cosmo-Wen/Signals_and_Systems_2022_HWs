@@ -1,11 +1,11 @@
-n = -5: 5;
-y = [];
-for i = n
-    if i >= -2 && i <= 2
-        temp = i;
-        y = [y, temp];
-    else
-        y = [y, 0];
-    end
+x = -10 : 10;
+y = 0;
+
+for k = -2 : 2
+    n = k.*(k <= 2 && k >= -2);
+    nshiftk = circshift(x, k);
+    nk = k.*(nshiftk >= -2 & nshiftk <= 2);
+    y = y + nshiftk.*nk;
 end
-stem([-10: 10], conv(y, y));
+
+stem(x, y);
