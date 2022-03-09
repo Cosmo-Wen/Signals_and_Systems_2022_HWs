@@ -13,14 +13,15 @@ z1 = exp((1/20)*2*pi*1i*n);         % fundemental frequency of 20
 z2 = exp((1/30)*2*pi*1i*n);         % fundemental frequency of 30
 z3 = exp((1/60)*2*pi*1i*n);         % fundemental frequency of 60
 
-figure();                           % figure 1
+figure();
+subplot(2, 1, 1);  
 stem(n, real(z1), 'o');
-hold on;
+hold on
 stem(n, real(z2), 'x');
 stem(n, real(z3), '*');
-hold off;
+hold off
 
-figure();                           % figure 2
+subplot(2, 1, 2);
 stem(n, real(z1 + z2 + z3), 'h');   % fundemental frequency of N
 
 % N = gcd(20, 30, 60), or the first place where z1, z2, z3 intersects
@@ -41,6 +42,7 @@ for k = -2 : 2
     y = y + nshiftk.*nk;                        % Doing the convolution (adding part)
 end
 
+figure();
 stem(x, y);
 
 % you don't have to reverse the second function if the values are evaluated from left to right
@@ -68,4 +70,39 @@ for li = 1 : length(t)
     end
 end
 
+figure();
 plot(t, y);
+
+%% Q4Q4Q4Q4Q4Q4Q4Q4Q4Q4Q4Q4Q4Q4Q4Q4Q4Q4Q4Q4Q4Q4Q4Q4Q4Q4Q4Q4Q4Q4Q4Q4Q4Q4Q4Q4Q4Q4Q4Q4Q4Q4
+
+clc, clear;
+
+t = 0:0.00005:1;
+tl = linspace(0, 2, 40001);
+delta = [];
+y = exp(-2 * t);
+
+for i = t                           % delta function of 1000 * 1/1000
+    if i < 1 / 1000
+        delta = [delta, 1000];
+    else
+        delta = [delta, 0];
+    end
+end
+
+con = conv(y, delta) / 20000; % discrete convolution with adjustment to dt
+
+figure();
+subplot(3, 1, 1);
+plot(t, y);
+subplot(3, 1, 2);
+plot(tl, con);   
+axis([0 1 0 1]);
+subplot(3, 1, 3);
+plot(t, y);
+hold on
+plot(tl, con);
+axis([0 1 0 1]);
+
+% integral of the delta function yeilds 1000 * 1 / 1000 = 1 (unit area)
+% integral of delta * y yeilds 1000 * (1 - exp(1/500)) / 2 = 0.9990006663, approx to 1 = y(0)

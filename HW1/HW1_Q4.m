@@ -1,25 +1,16 @@
-t = linspace(0, 5, 100);
-tl = linspace(0, 5, 199);
+t = 0:0.00005:1;
+tl = linspace(0, 2, 40001);
 delta = [];
-h = [];
-for i = t
-    if i < 0
-        delta = [delta, 0];
-    elseif i <= 1/10
-        delta = [delta, 10*i];
+y = exp(-2 * t);
+
+for i = t                           % delta function of 1000 * 1/1000
+    if i < 1 / 1000
+        delta = [delta, 1000];
     else
         delta = [delta, 0];
     end
 end
-for i = t
-    if i < 0
-        h = [h, 0];
-    else
-        h = [h, exp(-2*i)];
-    end
-end
-y = conv(delta, h);
-plot(t, h);
+
+plot(t, y);
 hold on
-plot(tl, y);
-        
+plot(tl, conv(y, delta) / 20000);   % discrete convolution with adjustment to dt
