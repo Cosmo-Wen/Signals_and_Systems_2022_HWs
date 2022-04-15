@@ -10,7 +10,7 @@ Fs = 500000;    % sampling frequency
 % Constructing Pulses
 t1 = (-50: 1/Fs: 50 - 1 / Fs) * pico; 
 t2 = (-5: 1/Fs: 5 - 1 / Fs) * pico;
-x1 = exp(-t1.^2 / (30 * pico)^2);   % Gaussian pulse of t0 = 30ps
+x1 = exp(-t1.^2 / (10 * pico)^2);   % Gaussian pulse of t0 = 10ps
 x2 = exp(-t2.^2 / (1 * pico)^2);    % Gaussian pulse of t0 = 1ps
 
 % Constructing Frequency Scale
@@ -28,10 +28,10 @@ X1 = fftshift(abs(fft(x1))) / Fs * pico;
 X2 = fftshift(abs(fft(x2))) / Fs * pico;
 
 % Plotting
-% Plot 1: t0 = 30ps
+% Plot 1: t0 = 10ps
 subplot(2, 2, 1);
 plot(t1, x1);
-title('x1(t0 = 30ps)');
+title('x1(t0 = 10ps)');
 legend('x1(t)'); 
 xlabel('t (s)');
 ylabel('x1(t)');
@@ -47,7 +47,7 @@ ylabel('x2(t)');
 % Plot 3: Fourier Transform of x1(t)
 subplot(2, 2, 3);
 plot(freq1, X1);
-axis([(-.1 / pico) (.1 / pico) 0 (75 * pico)]);
+axis([(-1 / pico) (1 / pico) 0 (20 * pico)]);
 title('Fourier Transform of x1(t): X1(jω)');
 legend('X1(jω)'); 
 xlabel('ω (rad/s)');
