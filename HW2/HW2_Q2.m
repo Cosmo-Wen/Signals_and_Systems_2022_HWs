@@ -19,11 +19,11 @@ df2 = Fs / length(x2);   % frequency difference divided evenly regarding t2
 freq1 = (-Fs / 2: df1: Fs / 2 - df1) * 2 * pi / pico;    % set the scale to [-Fs / 2: Fs / 2) with regards to df1
 freq2 = (-Fs / 2: df2: Fs / 2 - df2) * 2 * pi / pico;    % set the scale to [-Fs / 2: Fs / 2) with regards to df2
 
-% Fourier Transformation
+% Pulse Construction
 %   For Both Instances:
 %       1. Perform fast fourier transform
-%       2. Mirror 2pi(f) to (-f), and shift by fftshift
-%       3. Adjust for scale of integral
+%       2. Shift by scaling exp(-jωt0) for t0 = 2ps with respect to frequency scale
+%       3. Adjust for shift and scale of transformation
 X1 = fft(x1);    
 X2 = fft(x2);
 X1_shift = X1 .* exp(1i * freq1 * 2 * pico);
@@ -36,7 +36,7 @@ X1_shift = fftshift(abs(X1_shift)) / Fs * pico;
 X2_shift = fftshift(abs(X2_shift)) / Fs * pico;
 
 % Plotting
-% Plot 1: t0 = 10ps
+% Plot 1: t0 = 10ps: Before and After Shift
 subplot(2, 2, 1);
 plot(t1, x1);
 hold on;
@@ -47,7 +47,7 @@ legend('x1(t)', 'x1 shifted');
 xlabel('t (s)');
 ylabel('x1(t)');
 
-% Plot 2: t0 = 1ps
+% Plot 2: t0 = 1ps: Before and After Shift
 subplot(2, 2, 2);
 plot(t2, x2);
 hold on;
@@ -58,7 +58,7 @@ legend('x2(t)', 'x2 shifted');
 xlabel('t (s)');
 ylabel('x2(t)');
 
-% Plot 3: Fourier Transform of x1(t)
+% Plot 3: Fourier Transform of x1(t): Before and After Shift
 subplot(2, 2, 3);
 plot(freq1, X1);
 hold on;
@@ -70,7 +70,7 @@ legend('X1(jω)', 'X1 shifted');
 xlabel('ω (rad/s)');
 ylabel('Magnitude of X1(jω)');
 
-% Plot 4: Fourier Transform of x2(t)
+% Plot 4: Fourier Transform of x2(t): Before and After Shift
 subplot(2, 2, 4);
 plot(freq2, X2);
 hold on;
