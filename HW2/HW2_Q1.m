@@ -24,7 +24,7 @@ freq2 = (-Fs / 2: df2: Fs / 2 - df2) * 2 * pi / pico;    % set the scale to [-Fs
 %       1. Perform fast fourier transform
 %       2. Mirror 2pi(f) to (-f), and shift by fftshift
 %       3. Adjust for scale of integral
-X1 = fftshift(abs(fft(x1))) / Fs * pico;    
+X1 = fftshift(abs(fft(x1))) / Fs * pico;
 X2 = fftshift(abs(fft(x2))) / Fs * pico;
 
 % Plotting
@@ -56,7 +56,7 @@ ylabel('Magnitude of X1(jω)');
 % Plot 4: Fourier Transform of x2(t)
 subplot(2, 2, 4);
 plot(freq2, X2);
- axis([(-10 / pico) (10 / pico) 0 (2 * pico)]);
+axis([(-10 / pico) (10 / pico) 0 (2 * pico)]);
 title('Fourier Transform of x2(t): X2(jω)');
 legend('X2(jω)'); 
 xlabel('ω (rad/s)');
