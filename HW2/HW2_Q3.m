@@ -15,16 +15,22 @@ b = exp(-t.^2 / (1 * pico)^2);    % Gaussian pulse of t0 = 1ps
 % Performing Convolution in time domain
 c = conv(a, b) / Fs;
 t1 = (-10 + 1 / Fs: 1/Fs: 10 - 1 / Fs) * pico;
-plot(t1, c);
-hold on;
+%plot(t1, c);
+%hold on;
 
 % Performing Convolution in freq domain
 FT_a = fft(a);    % Fourier transform of the two signals
 FT_b = fft(b);
 FT_C = FT_a .* FT_b;    % A convolution B in time domain means A * B in frequency domain
 C = ifftshift(abs(ifft(FT_C))) / Fs;    % Turn C from freq domain back to time domain
-plot(t, C);
-hold off;
+%plot(t, C);
+%hold off;
+
+% Perform difference of c and C
+dif = (length(t1) - length(t)) / 2;
+c = c(dif + 1: length(t1) - dif);
+t1 = t1(dif + 1: length(t1) - dif);
+plot(t1, c - C);
 
 % % Plotting
 % % Plot 1: c
