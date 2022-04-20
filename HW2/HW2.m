@@ -190,6 +190,7 @@ C = ifftshift(abs(ifft(FT_C))) / Fs;    % Turn C from freq domain back to time d
 plot(t, C);
 hold off;
 title('Convolution in time and frequency domain');
+axis([-5 * pico, 5 * pico, 0, 2]);
 legend('c', 'C');
 xlabel('t (s)');
 ylabel('C (x)');
@@ -199,8 +200,9 @@ dif = (length(t1) - length(t)) / 2;
 c = c(dif + 1: length(t1) - dif);
 t1 = t1(dif + 1: length(t1) - dif);
 subplot(2, 1, 2);
-plot(t1, c - C);
+plot(t1, C - c);
 title('Difference between time and frequency domain');
+axis([-5 * pico, 5 * pico, 0, 10^-4]);
 legend('c - C');
 xlabel('t (s)');
 ylabel('c (x) - C (x)');
