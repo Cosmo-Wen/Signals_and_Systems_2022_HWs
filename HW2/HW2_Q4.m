@@ -2,7 +2,7 @@ clc, clear;
 
 micro = 10^-6;  % define micro
 
-Fs = 5000;    % sampling freqency
+Fs = 50000;    % sampling freqency
 
 % Constructing pulses
 t = (-5: 1/Fs: 5 - 1/Fs) * micro;

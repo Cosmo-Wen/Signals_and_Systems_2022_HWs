@@ -77,7 +77,7 @@ hold on;
 plot(freq2, X2_shift);
 hold off;
 axis([(-10 / pico) (10 / pico) 0 (2 * pico)]);
-title('Phase of x1 and x1 shifted');
+title('Phase of x2 and x2 shifted');
 legend('X2(jω)', 'X2 shifted'); 
 xlabel('ω (rad/s)');
 ylabel('Magnitude of X2(jω)');
