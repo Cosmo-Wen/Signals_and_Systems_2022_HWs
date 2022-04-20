@@ -58,7 +58,7 @@ ylabel('Magnitude');
 % Plot 3: 1/(2*pi) * conv(G(jw), P(jw))
 subplot(3, 1, 3);
 plot(freq4, R2 - R1);
-axis([-100 / micro, 100 / micro, 0, 1 * micro]);
+axis([-100 / micro, 100 / micro, 0, 1 * micro * micro * micro]);
 title('Difference between R1 R2');
 xlabel('ω (rad/s)');
 ylabel('Magnitude');
