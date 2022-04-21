@@ -13,7 +13,7 @@ a = 1*(t>-2 * pico)-1*(t>2 * pico);    % Square wave with T1 = 2ps
 b = exp(-t.^2 / (1 * pico)^2);    % Gaussian pulse of t0 = 1ps
 
 % Performing Convolution in time domain
-c = conv(a, b) / Fs;
+c = conv(a, b) / Fs * pico;
 t1 = (-10 + 1 / Fs: 1/Fs: 10 - 1 / Fs) * pico;
 subplot(2, 1, 1);
 plot(t1, c);
@@ -23,11 +23,11 @@ hold on;
 FT_a = fft(a);    % Fourier transform of the two signals
 FT_b = fft(b);
 FT_C = FT_a .* FT_b;    % A convolution B in time domain means A * B in frequency domain
-C = ifftshift(abs(ifft(FT_C))) / Fs;    % Turn C from freq domain back to time domain
+C = ifftshift(abs(ifft(FT_C))) / Fs * pico;    % Turn C from freq domain back to time domain
 plot(t, C);
 hold off;
 title('Convolution in time and frequency domain');
-axis([-5 * pico, 5 * pico, 0, 2]);
+axis([-5 * pico, 5 * pico, 0, 2 * pico]);
 legend('c', 'C');
 xlabel('t (s)');
 ylabel('C (x)');
@@ -39,7 +39,7 @@ t1 = t1(dif + 1: length(t1) - dif);
 subplot(2, 1, 2);
 plot(t1, C - c);
 title('Difference between time and frequency domain');
-axis([-5 * pico, 5 * pico, 0, 10^-4]);
+axis([-5 * pico, 5 * pico, 0, 10^-16]);
 legend('c - C');
 xlabel('t (s)');
 ylabel('c (x) - C (x)');
