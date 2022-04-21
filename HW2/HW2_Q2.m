@@ -30,14 +30,13 @@ X1_shift = X1 .* exp(1i * freq1 * 2 * pico);
 X2_shift = X2 .* exp(1i * freq2 * 2 * pico);
 x1_shift = ifftshift(ifft(X1_shift));
 x2_shift = ifftshift(ifft(X2_shift));
-X1 = fftshift(fft(fftshift(x1))) / Fs * pico;    
-X2 = fftshift(fft(fftshift(x2))) / Fs * pico;
-X1_shift = fftshift(abs(X1_shift)) / Fs * pico;
-X2_shift = fftshift(abs(X2_shift)) / Fs * pico;
+
+% As obviously shown, the phase shift is exp(-jω(-2ps)) for both cases
+% Identical phase shift for the same amount of shift in the time domain
 
 % Plotting
 % Plot 1: t0 = 10ps: Before and After Shift
-subplot(2, 2, 1);
+subplot(2, 1, 1);
 plot(t1, x1);
 hold on;
 plot (t1, x1_shift);
@@ -48,7 +47,7 @@ xlabel('t (s)');
 ylabel('x1(t)');
 
 % Plot 2: t0 = 1ps: Before and After Shift
-subplot(2, 2, 2);
+subplot(2, 1, 2);
 plot(t2, x2);
 hold on;
 plot(t2, x2_shift);
@@ -57,27 +56,3 @@ title('x2(t0 = 1ps) and shifted -2ps');
 legend('x2(t)', 'x2 shifted'); 
 xlabel('t (s)');
 ylabel('x2(t)');
-
-% Plot 3: Fourier Transform of x1(t): Before and After Shift
-subplot(2, 2, 3);
-plot(freq1, X1);
-hold on;
-plot(freq1, X1_shift);
-hold off;
-axis([(-1 / pico) (1 / pico) 0 (20 * pico)]);
-title('Phase of x1 and x1 shifted');
-legend('X1(jω)', 'X1 shifted'); 
-xlabel('ω (rad/s)');
-ylabel('Magnitude of X1(jω)');
-
-% Plot 4: Fourier Transform of x2(t): Before and After Shift
-subplot(2, 2, 4);
-plot(freq2, X2);
-hold on;
-plot(freq2, X2_shift);
-hold off;
-axis([(-10 / pico) (10 / pico) 0 (2 * pico)]);
-title('Phase of x2 and x2 shifted');
-legend('X2(jω)', 'X2 shifted'); 
-xlabel('ω (rad/s)');
-ylabel('Magnitude of X2(jω)');
