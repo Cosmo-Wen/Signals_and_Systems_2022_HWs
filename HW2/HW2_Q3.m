@@ -5,7 +5,7 @@ clc; clear;
 % Definitions
 pico = 10^-12;  % define pico 
 
-Fs = 5000;    % sampling frequency
+Fs = 50000;    % sampling frequency
 
 % Constructing Pulses
 t = (-5: 1/Fs: 5 - 1 / Fs) * pico;
@@ -20,10 +20,10 @@ plot(t1, c);
 hold on;
 
 % Performing Convolution in freq domain
-FT_a = fft(a);    % Fourier transform of the two signals
-FT_b = fft(b);
+FT_a = fft(fftshift(a));    % Fourier transform of the two signals
+FT_b = fft(fftshift(b));
 FT_C = FT_a .* FT_b;    % A convolution B in time domain means A * B in frequency domain
-C = ifftshift(abs(ifft(FT_C))) / Fs * pico;    % Turn C from freq domain back to time domain
+C = ifftshift(ifft(FT_C)) / Fs * pico;    % Turn C from freq domain back to time domain
 plot(t, C);
 hold off;
 title('Convolution in time and frequency domain');

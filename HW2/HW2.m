@@ -33,8 +33,8 @@ freq2 = (-Fs / 2: df2: Fs / 2 - df2) * 2 * pi / pico;    % set the scale to [-Fs
 %       1. Perform fast fourier transform
 %       2. Mirror 2pi(f) to (-f), and shift by fftshift
 %       3. Adjust for scale of integral
-X1 = fftshift(abs(fft(x1))) / Fs * pico;
-X2 = fftshift(abs(fft(x2))) / Fs * pico;
+X1 = fftshift(fft(fftshift(x1))) / Fs * pico;
+X2 = fftshift(fft(fftshift(x2))) / Fs * pico;
 
 % Plotting
 % Plot 1: t0 = 10ps
@@ -73,7 +73,6 @@ ylabel('Magnitude of X2(jω)');
 
 %% Q2Q2Q2Q2Q2Q2Q2Q2Q2Q2Q2Q2Q2Q2Q2Q2Q2Q2Q2Q2Q2Q2Q2Q2Q2Q2Q2Q2Q2Q2Q2Q2Q2Q2Q2Q2Q2Q2Q2Q2Q2Q2
 
-
 clc; clear;
 
 % exp(-(t/t0)^2) = t0 * sqrt(pi) * exp(-ω^2 * t^2 / 4)
@@ -100,14 +99,14 @@ freq2 = (-Fs / 2: df2: Fs / 2 - df2) * 2 * pi / pico;    % set the scale to [-Fs
 %       1. Perform fast fourier transform
 %       2. Shift by scaling exp(-jωt0) for t0 = 2ps with respect to frequency scale
 %       3. Adjust for shift and scale of transformation
-X1 = fft(x1);    
-X2 = fft(x2);
+X1 = fft(fftshift(x1));    
+X2 = fft(fftshift(x2));
 X1_shift = X1 .* exp(1i * freq1 * 2 * pico);
 X2_shift = X2 .* exp(1i * freq2 * 2 * pico);
-x1_shift = abs(ifft(X1_shift));
-x2_shift = abs(ifft(X2_shift));
-X1 = fftshift(abs(fft(x1))) / Fs * pico;    
-X2 = fftshift(abs(fft(x2))) / Fs * pico;
+x1_shift = ifftshift(ifft(X1_shift));
+x2_shift = ifftshift(ifft(X2_shift));
+X1 = fftshift(fft(fftshift(x1))) / Fs * pico;    
+X2 = fftshift(fft(fftshift(x2))) / Fs * pico;
 X1_shift = fftshift(abs(X1_shift)) / Fs * pico;
 X2_shift = fftshift(abs(X2_shift)) / Fs * pico;
 
@@ -158,7 +157,6 @@ legend('X2(jω)', 'X2 shifted');
 xlabel('ω (rad/s)');
 ylabel('Magnitude of X2(jω)');
 
-
 %% Q3Q3Q3Q3Q3Q3Q3Q3Q3Q3Q3Q3Q3Q3Q3Q3Q3Q3Q3Q3Q3Q3Q3Q3Q3Q3Q3Q3Q3Q3Q3Q3Q3Q3Q3Q3Q3Q3Q3Q3Q3Q3
 
 clc; clear;
@@ -168,7 +166,7 @@ clc; clear;
 % Definitions
 pico = 10^-12;  % define pico 
 
-Fs = 5000;    % sampling frequency
+Fs = 50000;    % sampling frequency
 
 % Constructing Pulses
 t = (-5: 1/Fs: 5 - 1 / Fs) * pico;
@@ -183,10 +181,10 @@ plot(t1, c);
 hold on;
 
 % Performing Convolution in freq domain
-FT_a = fft(a);    % Fourier transform of the two signals
-FT_b = fft(b);
+FT_a = fft(fftshift(a));    % Fourier transform of the two signals
+FT_b = fft(fftshift(b));
 FT_C = FT_a .* FT_b;    % A convolution B in time domain means A * B in frequency domain
-C = ifftshift(abs(ifft(FT_C))) / Fs * pico;    % Turn C from freq domain back to time domain
+C = ifftshift(ifft(FT_C)) / Fs * pico;    % Turn C from freq domain back to time domain
 plot(t, C);
 hold off;
 title('Convolution in time and frequency domain');
@@ -229,9 +227,9 @@ freq1 = (-Fs / 2: df1: Fs / 2 - df1) * 2 * pi / micro;  % set the scale to [-Fs 
 freq2 = (-Fs / 2: df2: Fs / 2 - df2) * 2 * pi / micro;  % set the scale to [-Fs / 2: Fs / 2) with regards to df2
 freq3 = (-Fs / 2: df3: Fs / 2 - df3) * 2 * pi / micro;  % set the scale to [-Fs / 2: Fs / 2) with regards to df3
 
-G = fftshift(abs(fft(g))) / Fs * micro;     % Fourier transform of g(t)
-P = fftshift(abs(fft(p))) / Fs * micro;     % Fourier transform of p(t)
-R1 = fftshift(abs(fft(r))) / Fs * micro;    % Fourier transform of r(t)
+G = fftshift(fft(fftshift(g))) / Fs * micro;     % Fourier transform of g(t)
+P = fftshift(fft(fftshift(p))) / Fs * micro;     % Fourier transform of p(t)
+R1 = fftshift(fft(fftshift(r))) / Fs * micro;    % Fourier transform of r(t)
 
 R2 = (conv(G, P) * (df1 * 2 * pi / micro)) / (2*pi);    % Convolution of G, P and divided the result by 2*pi
 freq4 = (-Fs: df1: Fs - df1) * 2 * pi / micro;    % set the scale to [-Fs : Fs) because of convolution

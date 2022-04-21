@@ -24,14 +24,14 @@ freq2 = (-Fs / 2: df2: Fs / 2 - df2) * 2 * pi / pico;    % set the scale to [-Fs
 %       1. Perform fast fourier transform
 %       2. Shift by scaling exp(-jωt0) for t0 = 2ps with respect to frequency scale
 %       3. Adjust for shift and scale of transformation
-X1 = fft(x1);    
-X2 = fft(x2);
+X1 = fft(fftshift(x1));    
+X2 = fft(fftshift(x2));
 X1_shift = X1 .* exp(1i * freq1 * 2 * pico);
 X2_shift = X2 .* exp(1i * freq2 * 2 * pico);
-x1_shift = abs(ifft(X1_shift));
-x2_shift = abs(ifft(X2_shift));
-X1 = fftshift(abs(fft(x1))) / Fs * pico;    
-X2 = fftshift(abs(fft(x2))) / Fs * pico;
+x1_shift = ifftshift(ifft(X1_shift));
+x2_shift = ifftshift(ifft(X2_shift));
+X1 = fftshift(fft(fftshift(x1))) / Fs * pico;    
+X2 = fftshift(fft(fftshift(x2))) / Fs * pico;
 X1_shift = fftshift(abs(X1_shift)) / Fs * pico;
 X2_shift = fftshift(abs(X2_shift)) / Fs * pico;
 

@@ -18,9 +18,9 @@ freq1 = (-Fs / 2: df1: Fs / 2 - df1) * 2 * pi / micro;  % set the scale to [-Fs 
 freq2 = (-Fs / 2: df2: Fs / 2 - df2) * 2 * pi / micro;  % set the scale to [-Fs / 2: Fs / 2) with regards to df2
 freq3 = (-Fs / 2: df3: Fs / 2 - df3) * 2 * pi / micro;  % set the scale to [-Fs / 2: Fs / 2) with regards to df3
 
-G = fftshift(abs(fft(g))) / Fs * micro;     % Fourier transform of g(t)
-P = fftshift(abs(fft(p))) / Fs * micro;     % Fourier transform of p(t)
-R1 = fftshift(abs(fft(r))) / Fs * micro;    % Fourier transform of r(t)
+G = fftshift(fft(fftshift(g))) / Fs * micro;     % Fourier transform of g(t)
+P = fftshift(fft(fftshift(p))) / Fs * micro;     % Fourier transform of p(t)
+R1 = fftshift(fft(fftshift(r))) / Fs * micro;    % Fourier transform of r(t)
 
 R2 = (conv(G, P) * (df1 * 2 * pi / micro)) / (2*pi);    % Convolution of G, P and divided the result by 2*pi
 freq4 = (-Fs: df1: Fs - df1) * 2 * pi / micro;    % set the scale to [-Fs : Fs) because of convolution

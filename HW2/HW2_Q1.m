@@ -24,8 +24,8 @@ freq2 = (-Fs / 2: df2: Fs / 2 - df2) * 2 * pi / pico;    % set the scale to [-Fs
 %       1. Perform fast fourier transform
 %       2. Mirror 2pi(f) to (-f), and shift by fftshift
 %       3. Adjust for scale of integral
-X1 = fftshift(abs(fft(x1))) / Fs * pico;
-X2 = fftshift(abs(fft(x2))) / Fs * pico;
+X1 = fftshift(fft(fftshift(x1))) / Fs * pico;
+X2 = fftshift(fft(fftshift(x2))) / Fs * pico;
 
 % Plotting
 % Plot 1: t0 = 10ps
