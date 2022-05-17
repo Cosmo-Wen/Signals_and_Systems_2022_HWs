@@ -1,10 +1,9 @@
 clc;    clear;
 
 Fs = 5000;
+
 wr = 2 * pi * 10^9;
-t = -5: 1 / Fs: 5 - 1 / Fs;
-df = Fs / length(t);
-freq = (-Fs / 2: df: Fs / 2 - df) * 2 * pi;
+t = -5: 1 / Fs: 5;
 
 b1 = 2 * pi;
 e1 = exp(1i * b1 * sin(wr * t));
