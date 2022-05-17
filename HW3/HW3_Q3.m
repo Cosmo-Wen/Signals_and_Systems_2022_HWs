@@ -27,9 +27,9 @@ H2 = wn^2 ./ (-w.^2 + 2 * z2 * wn * 1i * w + wn^2);
 H3 = wn^2 ./ (-w.^2 + 2 * z3 * wn * 1i * w + wn^2);
 
 % Impulse Responses by Inverse Fourier Transform
-h1 = ifft(ifftshift(H1));
-h2 = ifft(ifftshift(H2));
-h3 = ifft(ifftshift(H3));
+h1 = ifft(ifftshift(H1 * Fs));
+h2 = ifft(ifftshift(H2 * Fs));
+h3 = ifft(ifftshift(H3 * Fs));
 
 % Plot Impulse Response of ζ = 0.5
 subplot(3, 3, 1);
