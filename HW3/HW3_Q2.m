@@ -26,11 +26,11 @@ e2 = exp(1i * b2 * sin(dw * t));
 E2 = fftshift(fft(fftshift(e2))) / Fs;
 
 % E3 = Magnitude of E1 and Phase of 1
-E3 = abs(E1) .* exp(1i);
+E3 = abs(E1);
 e3 = ifftshift(ifft(ifftshift(E3 * Fs)));
 
 %  E4 = Magnitude of E2 and Phase of 1
-E4 = abs(E2) .* exp(1i);
+E4 = abs(E2);
 e4 = ifftshift(ifft(ifftshift(E4 * Fs)));
 
 % Plot |e1|^2
@@ -44,6 +44,7 @@ ylabel('e1(t)');
 % Plot Magnitude of E1
 subplot(3, 3, 2);
 plot(freq, abs(E1));
+axis([-pi, pi, -1, 10]);
 title('|E1(jw)|');
 legend('|E1(jw)|'); 
 xlabel('w (rad)');
@@ -60,6 +61,7 @@ ylabel('ϕ');
 % Plot Magnitude of E2
 subplot(3, 3, 4);
 plot(freq, abs(E2));
+axis([-pi, pi, -1, 10]);
 title('|E2(jw)|');
 legend('|E2(jw)|'); 
 xlabel('w (rad)');
@@ -75,7 +77,7 @@ ylabel('ϕ');
 
 % Plot |e3|^2
 subplot(3, 3, 7);
-plot(freq, abs(e3).^2);
+plot(t, abs(e3).^2);
 title('|e3(t)|^2');
 legend('|e3(t)|^2'); 
 xlabel('t (s)');
@@ -83,7 +85,7 @@ ylabel('e3(t)');
 
 % Plot |e4|^2
 subplot(3, 3, 8);
-plot(freq, abs(e4).^2);
+plot(t, abs(e4).^2);
 title('|e4(t)|^2');
 legend('|e4(t)|^2'); 
 xlabel('t (s)');
