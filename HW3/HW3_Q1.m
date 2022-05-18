@@ -12,12 +12,10 @@ A = (freq == (-2)*delta_w | freq == (-1)*delta_w | freq == 0 | freq == delta_w |
 Ar = (freq == (-6)*delta_w | freq == (-3)*delta_w | freq == 0 | freq == 3*delta_w | freq == 6*delta_w);
 
 % new range of frequency comb
-freq2 = (-7 + wc/delta_w : 1/Fs : 7 + wc/delta_w - 1/Fs) * delta_w;
+freq2 = freq + wc;
 % A(jw) centered at wc = 2 * pi * 10^10
 A2 = ((freq2 == ((-2)*delta_w + wc)) | (freq2 == ((-1)*delta_w + wc)) | (freq2 == wc) | (freq2 == (delta_w + wc)) | (freq2 == (2*delta_w + wc)));
-plot(freq2, A2);
 
-%%
 % plotting
 % original a(t)
 a = ifftshift(ifft(ifftshift(A)));
@@ -27,10 +25,14 @@ axis([-10^(-10), 10^(-10), -1 * 10^(-4), 2 * 10^(-4)]);
 title('original a(t)');
 xlabel('t');
 ylabel('a(t)');
+% a(t) with 3 repetition
 ar = ifftshift(ifft(ifftshift(Ar)));
 subplot(2, 2, 2);
 plot(t, ar);
 axis([-10^(-10), 10^(-10), -1 * 10^(-4), 2 * 10^(-4)]);
+title('a(t) with 3 repetition')
+xlabel('t');
+ylabel('a(t)');
 % a(t) when A(jw) centered at 2 * pi * 10^10
 a2 = ifftshift(ifft(ifftshift(A2)));
 subplot(2, 2, 3);
@@ -45,7 +47,6 @@ I = abs(a).^2;
 I2 = abs(a2).^2;
 subplot(2, 2, 4);
 plot(t, I2 - I);
-axis([-5 * 10^(-11), 5 * 10^(-11), -2 * 10^(-8), 0.5 * 10^(-8)]);
 title('Difference between both intensities');
 xlabel('t');
 ylabel('I1(t) - I2(t)');
