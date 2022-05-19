@@ -32,7 +32,7 @@ A2 = circshift(A, wc/delta_w);
 
 % plotting
 % original a(t)
-a = ifftshift(ifft(ifftshift(A)));
+a = ifftshift(ifft(ifftshift(A))) .* length(freq) ./ (2 .* pi);
 subplot(3, 2, 1);
 plot(t, a);
 title('original a(t)');
@@ -40,7 +40,7 @@ xlabel('t');
 ylabel('a(t)');
 
 % a(t) with 3 repetition(three times narrower)
-ar = ifftshift(ifft(ifftshift(Ar)));
+ar = ifftshift(ifft(ifftshift(Ar))) .* length(freq) ./ (2 .* pi);
 subplot(3, 2, 2);
 plot(t, ar);
 title('a(t) with 3 repetition')
@@ -48,7 +48,7 @@ xlabel('t');
 ylabel('a(t)');
 
 % a(t) when A(jw) centered at 2 * pi * 10^10
-a2 = ifftshift(ifft(ifftshift(A2)));
+a2 = ifftshift(ifft(ifftshift(A2))) .* length(freq) ./ (2 .* pi);
 subplot(3, 2, 3);
 plot(t, a2);
 title('a(t) when A(jw) centered at 2*pi*10^{10}');
@@ -56,7 +56,7 @@ xlabel('t');
 ylabel('a(t)');
 
 % plotting both a(t)and a2(t)intensities
-% by observing both graphs, we can determine that they are exactly the same
+% by observing both graphs, we can determine that they are identical
 I = abs(a).^2;
 I2 = abs(a2).^2;
 subplot(3, 2, 5);
