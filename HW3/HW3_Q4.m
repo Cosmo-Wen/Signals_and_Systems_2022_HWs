@@ -20,13 +20,13 @@ H_pi = 1./(1-2*0.5*cos(pi).*exp(-1j.*w)+0.5^2.*exp(-2j.*w));
 
 
 % Plotting
-subplot(3,2,1)
+subplot(3,3,1)
 stem(n,h_0)
 title('Impulse Response When θ = 0'); 
 xlabel('n');
 ylabel('h[n]');
 
-subplot(3,2,2)
+subplot(3,3,2)
 plot(w,20*log10(H_0))
 set(gca,'XTick',-2*pi:pi:2*pi)
 set(gca,'XTickLabel',{'-2\pi','-\pi','0','\pi','2\pi'})
@@ -34,13 +34,21 @@ title('Bode Plots for θ = 0');
 xlabel('w');
 ylabel('20log|H(e^j^w)|');
 
-subplot(3,2,3)
+subplot(3,3,3)
+plot(w,angle(H_0))
+set(gca,'XTick',-2*pi:pi:2*pi)
+set(gca,'XTickLabel',{'-2\pi','-\pi','0','\pi','2\pi'})
+title('Phase Part of Bode Plots for θ = 0'); 
+xlabel('w');
+ylabel('∠H(e^j^w)');
+
+subplot(3,3,4)
 stem(n,h_5)
 title('Impulse Response When θ = 0.5pi'); 
 xlabel('n');
 ylabel('h[n]');
 
-subplot(3,2,4)
+subplot(3,3,5)
 plot(w,20*log10(H_5))
 set(gca,'XTick',-2*pi:pi:2*pi)
 set(gca,'XTickLabel',{'-2\pi','-\pi','0','\pi','2\pi'})
@@ -48,13 +56,21 @@ title('Bode Plots for θ = 0.5pi');
 xlabel('w');
 ylabel('20log|H(e^j^w)|');
 
-subplot(3,2,5)
+subplot(3,3,6)
+plot(w,angle(H_5))
+set(gca,'XTick',-2*pi:pi:2*pi)
+set(gca,'XTickLabel',{'-2\pi','-\pi','0','\pi','2\pi'})
+title('Phase Part of Bode Plots for θ = 0.5pi'); 
+xlabel('w');
+ylabel('∠H(e^j^w)');
+
+subplot(3,3,7)
 stem(n,h_pi)
 title('Impulse Response When θ = pi'); 
 xlabel('n');
 ylabel('h[n]');
 
-subplot(3,2,6)
+subplot(3,3,8)
 plot(w,20*log10(H_pi))
 set(gca,'XTick',-2*pi:pi:2*pi)
 set(gca,'XTickLabel',{'-2\pi','-\pi','0','\pi','2\pi'})
@@ -62,4 +78,10 @@ title('Bode Plots for θ = pi');
 xlabel('w');
 ylabel('20log|H(e^j^w)|');
 
-
+subplot(3,3,9)
+plot(w,angle(H_pi))
+set(gca,'XTick',-2*pi:pi:2*pi)
+set(gca,'XTickLabel',{'-2\pi','-\pi','0','\pi','2\pi'})
+title('Phase Part of Bode Plots for θ = pi'); 
+xlabel('w');
+ylabel('∠H(e^j^w)');
