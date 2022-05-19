@@ -1,52 +1,59 @@
 clc;    clear;
 
-Fs = 10000;        % sampling of frequency signal
+Fs = 1;        % sampling of frequency signal
 delta_w = 2 * pi * 10^9;    % spacing of each impulse
 wc = 2 * pi * 10^10;
-freq = (-7 : 1/Fs : 7 - 1/Fs) .* delta_w;   % define range of freq comb
+freq = (-200 : 1/Fs : 200 - 1/Fs) .* delta_w;   % define range of freq comb
 dt = Fs / length(freq);     % sampling of time signal
-t = (-Fs/2 : dt : Fs/2 - dt) ./ (delta_w * 2 * pi); % define range of time signal
+t = (-Fs/2 : dt : Fs/2 - dt) .* 2 .* pi ./ (delta_w); % define range of time signal
 
-% A(jw)
+% define A(jw)
 A = (freq == (-2)*delta_w | freq == (-1)*delta_w | freq == 0 | freq == delta_w | freq == 2*delta_w);
+
+% expanding A(jw) in frequency domain to compress a(t) in time domain
+% define Ar(jw) as three times wider by A(jw) 
 Ar = (freq == (-6)*delta_w | freq == (-3)*delta_w | freq == 0 | freq == 3*delta_w | freq == 6*delta_w);
 
-% new range of frequency comb
-freq2 = freq + wc;
 % A(jw) centered at wc = 2 * pi * 10^10
-A2 = ((freq2 == ((-2)*delta_w + wc)) | (freq2 == ((-1)*delta_w + wc)) | (freq2 == wc) | (freq2 == (delta_w + wc)) | (freq2 == (2*delta_w + wc)));
+% using circshift to shift the original A(jw) to center at wc
+A2 = circshift(A, wc/delta_w);
 
 % plotting
 % original a(t)
 a = ifftshift(ifft(ifftshift(A)));
-subplot(2, 2, 1);
+subplot(3, 2, 1);
 plot(t, a);
-axis([-10^(-10), 10^(-10), -1 * 10^(-4), 2 * 10^(-4)]);
 title('original a(t)');
 xlabel('t');
 ylabel('a(t)');
-% a(t) with 3 repetition
+
+% a(t) with 3 repetition(three times narrower)
 ar = ifftshift(ifft(ifftshift(Ar)));
-subplot(2, 2, 2);
+subplot(3, 2, 2);
 plot(t, ar);
-axis([-10^(-10), 10^(-10), -1 * 10^(-4), 2 * 10^(-4)]);
 title('a(t) with 3 repetition')
 xlabel('t');
 ylabel('a(t)');
+
 % a(t) when A(jw) centered at 2 * pi * 10^10
 a2 = ifftshift(ifft(ifftshift(A2)));
-subplot(2, 2, 3);
+subplot(3, 2, 3);
 plot(t, a2);
-axis([-10^(-10), 10^(-10), -1 * 10^(-4), 2 * 10^(-4)]);
 title('a(t) when A(jw) centered at 2*pi*10^{10}');
 xlabel('t');
 ylabel('a(t)');
 
-% difference between both intensities
+% plotting both a(t)and a2(t)intensities
+% by observing both graphs, we can determine that they are exactly the same
 I = abs(a).^2;
 I2 = abs(a2).^2;
-subplot(2, 2, 4);
-plot(t, I2 - I);
-title('Difference between both intensities');
+subplot(3, 2, 5);
+plot(t, I);
+title('I(t) = |a(t)|^2');
 xlabel('t');
-ylabel('I1(t) - I2(t)');
+ylabel('I1(t)');
+subplot(3, 2, 6);
+plot(t, I2);
+title('I2(t) = |a2(t)|^2');
+xlabel('t');
+ylabel('I2(t)');
