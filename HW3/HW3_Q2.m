@@ -1,13 +1,13 @@
 clc;    clear;
 
 % Sampling Frequency
-Fs = 5000;
+Fs = 500000;
 
 % Δω = 2π * 10^9
 dw = 2 * pi * 10^9;
 
 % Set time and frequency scale
-t = -5: 1 / Fs: 5;
+t = -10: 1 / Fs: 10;
 df = Fs / length(t);
 freq = (-Fs / 2: df: Fs / 2 - df) * 2 * pi;
 
@@ -27,17 +27,17 @@ b2 = 4 * pi;
 
 % Construct e2 and its Fourier Transform
 e2 = exp(1i * b2 * sin(dw * t));
-E2 = fftshift(fft(fftshift(e2))) / Fs;\
+E2 = fftshift(fft(fftshift(e2))) / Fs;
 
 % By eliminating the phase of the signals,
 % We extract the phase that counteracts the sinusoidal nature of Euler's identity
 % Therefore introduces changes along magnitude = 1
 
-% E3 = Magnitude of E1 and Phase of 1
+% E3 = Magnitude of E1 and Phase of 0
 E3 = abs(E1);
 e3 = ifftshift(ifft(ifftshift(E3 * Fs)));
 
-%  E4 = Magnitude of E2 and Phase of 1
+%  E4 = Magnitude of E2 and Phase of 0
 E4 = abs(E2);
 e4 = ifftshift(ifft(ifftshift(E4 * Fs)));
 
