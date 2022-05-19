@@ -14,6 +14,10 @@ freq = (-Fs / 2: df: Fs / 2 - df) * 2 * pi;
 % β = 2π
 b1 = 2 * pi;
 
+% epm(t) is purely a phase modulation,
+% meaning for whatever β
+% Magnitude of the Signal is always 1
+
 % Construct e1 and its Fourier Transform
 e1 = exp(1i * b1 * sin(dw * t));
 E1 = fftshift(fft(fftshift(e1))) / Fs;
@@ -23,7 +27,11 @@ b2 = 4 * pi;
 
 % Construct e2 and its Fourier Transform
 e2 = exp(1i * b2 * sin(dw * t));
-E2 = fftshift(fft(fftshift(e2))) / Fs;
+E2 = fftshift(fft(fftshift(e2))) / Fs;\
+
+% By eliminating the phase of the signals,
+% We extract the phase that counteracts the sinusoidal nature of Euler's identity
+% Therefore introduces changes along magnitude = 1
 
 % E3 = Magnitude of E1 and Phase of 1
 E3 = abs(E1);
