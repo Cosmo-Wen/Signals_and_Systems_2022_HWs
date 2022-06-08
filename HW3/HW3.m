@@ -74,7 +74,7 @@ ylabel('I2(t)');
 clc;    clear;
 
 % Sampling Frequency
-Fs = 500000;
+Fs = 50000;
 
 % Δω = 2π * 10^9
 dw = 2 * pi * 10^9;
