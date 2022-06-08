@@ -18,7 +18,7 @@ title('Original Audio File Signal in Time Domain');
 T = transpose(T);
 y = fft(audio);
 y_p = fft(audio_pro);
-f= 0:(Fs/audiolength):Fs-(Fs/audiolength);     %转换横坐标以Hz为单位
+f= 0:(Fs/audiolength):Fs-(Fs/audiolength);     
 
 F = transpose(f);
 
