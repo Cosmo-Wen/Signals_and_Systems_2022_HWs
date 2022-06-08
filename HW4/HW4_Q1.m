@@ -15,17 +15,16 @@ title('Original Audio File Signal in Time Domain');
 
 %Performing Fourier Transform
 T = transpose(T);
-audio_pro = (T > 6.2).*(audio); %cut audio for professor sound use
 FFT = fft(audio);
 FFT_p = fft(audio_pro);
-f= 0:(Fs/audiolength):Fs-(Fs/audiolength);     
+f= 0:(Fs/audiolength):Fs-(Fs/audiolength);    
 
 
 F = transpose(f);
 
 sample_piano = FFT.*(F<400|F>47600);
 sample_violin = FFT.*(F<44000&F>4000);
-sample_prof = FFT_p.*((F<3000&F>2000)|(F>45000&F<46000));
+sample_prof = FFT.*(F<800&F>200);
 
 audio_piano = ifft(sample_piano);
 audio_violin = ifft(sample_violin);
