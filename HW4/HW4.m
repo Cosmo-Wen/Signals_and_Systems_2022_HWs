@@ -64,8 +64,10 @@ audiowrite('cello.wav', cello, Fs1);
 [male, Fs2] = audioread('prof.wav');
 nsemitons = 12;
 female = shiftPitch(male, nsemitons);
+female = female * 5;
 audiowrite('prof_female.wav', female, Fs2);
 
 % merge the audios together
-merge = cello + female;
+[piano, Fs] = audioread('piano.wav');
+merge = cello + female + piano;
 audiowrite('modified_sound_clip.wav', merge, Fs2);
