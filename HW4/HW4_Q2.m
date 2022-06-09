@@ -21,8 +21,12 @@ cello = shiftPitch(violin, nsemitons);
 cello = cello * 10;
 audiowrite('cello.wav', cello, Fs1);
 
-%convert male voice to female voice
+% convert male voice to female voice
 [male, Fs2] = audioread('prof.wav');
 nsemitons = 12;
 female = shiftPitch(male, nsemitons);
 audiowrite('prof_female.wav', female, Fs2);
+
+% merge the audios together
+merge = cello + female;
+audiowrite('modified_sound_clip.wav', merge, Fs2);
